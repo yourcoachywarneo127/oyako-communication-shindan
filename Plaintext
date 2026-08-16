@@ -1,0 +1,22 @@
+parent-child-diagnosis/
+├── app/
+│   ├── layout.tsx             # ルートレイアウト（メタデータ、フォント設定）
+│   ├── page.tsx               # メインページ（画面遷移状態の管理）
+│   └── globals.css            # グローバルスタイル・Tailwind設定
+├── components/
+│   ├── Header.tsx             # ヘッダー（タイトル・安心感のあるロゴ表示）
+│   ├── ScreenIntro.tsx        # SCREEN 01: トップ・導入画面
+│   ├── ScreenQuizChild.tsx    # SCREEN 02: 子どもの診断画面 (Q1〜Q10)
+│   ├── ScreenQuizParent.tsx   # SCREEN 03: 保護者の診断画面 (Q1〜Q10)
+│   ├── ScreenResult.tsx       # SCREEN 04: 診断結果画面（比較・解説・CTA）
+│   ├── RadarChart.tsx         # 6軸傾向表示用コンポーネント
+│   └── ProgressBar.tsx        # プログレスバー表示
+├── data/
+│   ├── questions.ts           # 質問文データ（子ども10問・保護者10問）
+│   ├── typesData.ts           # 6タイプ定義・色・解説・アドバイス
+│   ├── weights.ts             # 質問×タイプの重み付け係数マトリクス
+│   └── config.ts              # CTA URL設定・アプリ全体定数
+├── lib/
+│   └── diagnosisLogic.ts      # 診断・スコア計算・親子比較ロジック
+└── types/
+    └── index.ts               # TypeScript 型定義
