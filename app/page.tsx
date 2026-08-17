@@ -10,6 +10,9 @@ import ScreenResult from '../components/ScreenResult';
 export type AnswerValue = any;
 
 export interface DiagnosisResult {
+  child: any;
+  parent: any;
+  differences: any;
   [key: string]: any;
 }
 
