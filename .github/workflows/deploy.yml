@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./oyako-communication-shindan
-        run: npm ci
+        run: npm install
 
       - name: Build with Next.js
         working-directory: ./oyako-communication-shindan
