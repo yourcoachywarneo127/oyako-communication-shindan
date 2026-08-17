@@ -1,16 +1,16 @@
 export const metadata = {
   title: '親子のコミュニケーション診断',
   description: '親子のコミュニケーション診断アプリ',
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     
       {children}
     
-  )
+  );
 }
