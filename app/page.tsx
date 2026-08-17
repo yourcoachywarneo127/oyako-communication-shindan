@@ -7,17 +7,14 @@ import ScreenIntro from '../components/ScreenIntro';
 import ScreenQuizChild from '../components/ScreenQuizChild';
 import ScreenQuizParent from '../components/ScreenQuizParent';
 import ScreenResult from '../components/ScreenResult';
-// ▼ ここを追加（型定義）
+
 export type AnswerValue = number;
 
 export interface DiagnosisResult {
   [key: string]: any;
 }
 
-// 既存の Home 関数
-export default function Home() {
-  const [step, setStep] = useState<'intro' | 'child' | 'parent' | 'result'>('intro');
-  // ...（以下そのまま）
+
 export default function Home() {
   const [step, setStep] = useState<'intro' | 'child' | 'parent' | 'result'>('intro');
   const [childAnswers, setChildAnswers] = useState<Record<number, AnswerValue>>({});
