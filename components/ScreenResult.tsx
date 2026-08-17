@@ -1,7 +1,7 @@
 import React from 'react';
-import { DiagnosisResult } from '@/types';
-import { TYPES_DATA } from '@/data/typesData';
-import { CTA_URL } from '@/data/config';
+import { DiagnosisResult } from '../types';
+import { TYPES_DATA } from '../data/typesData';
+import { CTA_URL } from '../data/config';
 
 export default function ScreenResult({ result }: { result: DiagnosisResult }) {
   const childInfo = TYPES_DATA[result.child.mainType];
