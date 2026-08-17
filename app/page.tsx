@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+// 既存の import 文（Header や 各 Screen コンポーネントなど）がここに続きます...
 import Header from '../components/Header';
 import ScreenIntro from '../components/ScreenIntro';
 import ScreenQuizChild from '../components/ScreenQuizChild';
