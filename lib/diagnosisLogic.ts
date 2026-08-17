@@ -1,6 +1,6 @@
-import { AnswerValue, AxisScore, DiagnosisResult, IndividualResult, TypeCategory, TypeScore } from '@/types';
-import { QUESTION_WEIGHTS } from '@/data/weights';
-import { TYPES_DATA } from '@/data/typesData';
+import { AnswerValue, AxisScore, DiagnosisResult, IndividualResult, TypeCategory, TypeScore } from '../types';
+import { QUESTION_WEIGHTS } from '../data/weights';
+import { TYPES_DATA } from '../data/typesData';
 
 /**
  * 回答配列（10問分）から6軸スコアおよび6タイプスコアを算出
