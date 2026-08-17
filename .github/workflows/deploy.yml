@@ -27,6 +27,26 @@ jobs:
       - name: Build site
         run: npm run build
 
+      # out フォルダの場所を検出して `./out` に配置するステップ
+      - name: Locate build output
+        run: |
+          if [ -d "./out" ]; then
+            echo "Found ./out"
+          elif [ -d "./oyako-communication-shindan/out" ]; then
+            echo "Found ./oyako-communication-shindan/out, moving..."
+            mv ./oyako-communication-shindan/out ./out
+          else
+            echo "Searching for out directory..."
+            OUT_DIR=$(find . -maxdepth 3 -type d -name "out" | head -n 1)
+            if [ -n "$OUT_DIR" ]; then
+              echo "Found out at $OUT_DIR, moving to ./out"
+              mv "$OUT_DIR" ./out
+            else
+              echo "out directory not found!"
+              exit 1
+            fi
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
