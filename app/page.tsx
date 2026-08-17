@@ -7,7 +7,7 @@ import ScreenQuizChild from '../components/ScreenQuizChild';
 import ScreenQuizParent from '../components/ScreenQuizParent';
 import ScreenResult from '../components/ScreenResult';
 
-export type AnswerValue = number;
+export type AnswerValue = any;
 
 export interface DiagnosisResult {
   [key: string]: any;
