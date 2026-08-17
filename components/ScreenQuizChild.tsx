@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { AnswerValue } from '../types';
 import { CHILD_QUESTIONS } from '../data/questions';
@@ -14,6 +16,7 @@ export default function ScreenQuizChild({
   const [answers, setAnswers] = useState<Record<number, AnswerValue>>(initialAnswers);
   const [errorMsg, setErrorMsg] = useState('');
 
+  const totalQuestions = CHILD_QUESTIONS.length; // ★ 実際の質問数を取得
   const currentQ = CHILD_QUESTIONS[currentIndex];
   const qNum = currentIndex + 1;
 
@@ -22,7 +25,7 @@ export default function ScreenQuizChild({
     const newAns = { ...answers, [qNum]: val };
     setAnswers(newAns);
 
-    if (currentIndex < CHILD_QUESTIONS.length - 1) {
+    if (currentIndex < totalQuestions - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       onComplete(newAns);
@@ -37,7 +40,7 @@ export default function ScreenQuizChild({
         <p className="text-xs text-gray-500">普段のお子さんの様子に、いちばん近いものを選んでください。</p>
       </div>
 
-      <ProgressBar current={qNum} total={10} label={`あと${10 - qNum}問`} />
+      <ProgressBar current={qNum} total={totalQuestions} label={`あと${totalQuestions - qNum}問`} />
 
       <div className="py-4 space-y-3">
         <div className="text-xs font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-full w-fit">
