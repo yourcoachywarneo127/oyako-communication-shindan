@@ -6,26 +6,19 @@ import ScreenIntro from '../components/ScreenIntro';
 import ScreenQuizChild from '../components/ScreenQuizChild';
 import ScreenQuizParent from '../components/ScreenQuizParent';
 import ScreenResult from '../components/ScreenResult';
+import { DiagnosisResult, AnswerValue } from '../types';
 
-export type AnswerValue = any;
-
-export interface DiagnosisResult {
-  child: {
-    mainType: string;
-    rawAnswers: Record<number, any>;
-  };
-  parent: {
-    mainType: string;
-    rawAnswers: Record<number, any>;
-  };
-  differences: string[];
-  [key: string]: any;
-}
-
-// 回答データの合計値からタイプキーを決定する処理
-function calculateIndividualResult(answers: Record<number, any>) {
+// 回答データからタイプおよび各スコア情報を算出する処理
+function calculateIndividualResult(answers: Record<number, AnswerValue>) {
   if (!answers || Object.keys(answers).length === 0) {
-    return { mainType: 'typeA', rawAnswers: answers };
+    return {
+      mainType: 'typeA',
+      subType: 'typeB',
+      isClose: false,
+      axisScores: { axis1: 0, axis2: 0 },
+      typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
+      rawAnswers: answers,
+    };
   }
 
   // 回答スコアの合計を算出
@@ -36,7 +29,6 @@ function calculateIndividualResult(answers: Record<number, any>) {
   // 平均点数を算出 (1〜4の範囲)
   const avgScore = totalScore / Object.keys(answers).length;
 
-  // スコアに応じたタイプ判定（TYPES_DATAのキー名に合わせて必要に応じて調整してください）
   let mainType = 'typeA';
   if (avgScore >= 3.25) {
     mainType = 'typeA';
@@ -50,6 +42,10 @@ function calculateIndividualResult(answers: Record<number, any>) {
 
   return {
     mainType,
+    subType: 'typeB',
+    isClose: false,
+    axisScores: { axis1: totalScore, axis2: 0 },
+    typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
     rawAnswers: answers,
   };
 }
