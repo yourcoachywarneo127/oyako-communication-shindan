@@ -6,14 +6,14 @@ import ScreenIntro from '../components/ScreenIntro';
 import ScreenQuizChild from '../components/ScreenQuizChild';
 import ScreenQuizParent from '../components/ScreenQuizParent';
 import ScreenResult from '../components/ScreenResult';
-import { DiagnosisResult, AnswerValue } from '../types';
+import { DiagnosisResult, AnswerValue, TypeCategory, IndividualResult } from '../types';
 
 // 回答データからタイプおよび各スコア情報を算出する処理
-function calculateIndividualResult(answers: Record<number, AnswerValue>) {
+function calculateIndividualResult(answers: Record<number, AnswerValue>): IndividualResult {
   if (!answers || Object.keys(answers).length === 0) {
     return {
-      mainType: 'typeA',
-      subType: 'typeB',
+      mainType: 'typeA' as TypeCategory,
+      subType: 'typeB' as TypeCategory,
       isClose: false,
       axisScores: { axis1: 0, axis2: 0 },
       typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
@@ -29,20 +29,20 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>) {
   // 平均点数を算出 (1〜4の範囲)
   const avgScore = totalScore / Object.keys(answers).length;
 
-  let mainType = 'typeA';
+  let mainType: TypeCategory = 'typeA' as TypeCategory;
   if (avgScore >= 3.25) {
-    mainType = 'typeA';
+    mainType = 'typeA' as TypeCategory;
   } else if (avgScore >= 2.5) {
-    mainType = 'typeB';
+    mainType = 'typeB' as TypeCategory;
   } else if (avgScore >= 1.75) {
-    mainType = 'typeC';
+    mainType = 'typeC' as TypeCategory;
   } else {
-    mainType = 'typeD';
+    mainType = 'typeD' as TypeCategory;
   }
 
   return {
     mainType,
-    subType: 'typeB',
+    subType: 'typeB' as TypeCategory,
     isClose: false,
     axisScores: { axis1: totalScore, axis2: 0 },
     typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
