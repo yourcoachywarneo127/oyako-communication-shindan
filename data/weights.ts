@@ -1,4 +1,4 @@
-import { TypeCategory } from '@/types';
+import { TypeCategory } from '../types';
 
 // 各質問回答（1〜4点）の重み付けテーブル
 export const QUESTION_WEIGHTS: Record<number, Record<TypeCategory, number>> = {
