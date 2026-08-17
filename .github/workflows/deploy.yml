@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # ブランチ名が master の場合は "master" に変更してください
+    branches: ["main", "master"]
 
 permissions:
   contents: read
@@ -19,10 +19,10 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22" # Nodeのバージョンを推奨版に更新
+          node-version: "22"
 
       - name: Install dependencies
-        run: npm install # package-lock.json がなくても動作するコマンドに変更
+        run: npm install
 
       - name: Build site
         run: npm run build
@@ -35,4 +35,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      
