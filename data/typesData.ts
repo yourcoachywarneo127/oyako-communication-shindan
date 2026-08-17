@@ -1,4 +1,4 @@
-import { TypeCategory, TypeInfo } from '@/types';
+import { TypeCategory, TypeInfo } from '../types';
 
 export const TYPES_DATA: Record<TypeCategory, TypeInfo> = {
   sun: {
