@@ -1,7 +1,9 @@
 'use client';
 
 interface Props {
-  onComplete: (answers: Record<string, number>) => void;
+  initialAnswers?: any;
+  onComplete: (answers: any) => void;
+  onBack?: () => void;
 }
 
 export default function ScreenQuizParent({ onComplete }: Props) {
