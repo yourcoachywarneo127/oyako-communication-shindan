@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main", "master"]
+    
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 permissions:
   contents: read
