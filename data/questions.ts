@@ -1,4 +1,4 @@
-import { Question } from '@/types';
+import { Question } from '../types';
 
 export const CHILD_QUESTIONS: Question[] = [
   { id: 'cq1', text: '嬉しいことや楽しいことがあると、表情や態度に出やすい。', axis: 'reaction' },
