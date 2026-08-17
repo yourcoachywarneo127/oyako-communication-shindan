@@ -4,9 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // GitHub Pages用のパス設定
-  basePath: process.env.NODE_ENV === 'production' ? '/oyako-communication-shindan' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/oyako-communication-shindan/' : '',
+  // GitHub Pages用のサブディレクトリ設定
+  basePath: '/oyako-communication-shindan',
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;
