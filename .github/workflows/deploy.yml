@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # メインブランチ名が master の場合は master に変更してください
+    branches: [ main ] # ブランチ名が master の場合は master に変更してください
 
 permissions:
   contents: read
@@ -31,22 +31,17 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          # プロジェクトのルートフォルダを指定
-          path: "./oyako-communication-shindan"
 
       - name: Install dependencies
-        working-directory: ./oyako-communication-shindan
         run: npm install
 
       - name: Build with Next.js
-        working-directory: ./oyako-communication-shindan
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./oyako-communication-shindan/out
+          path: ./out
 
       - name: Deploy to GitHub Pages
         id: deployment
