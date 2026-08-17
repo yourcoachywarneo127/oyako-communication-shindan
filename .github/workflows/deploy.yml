@@ -20,11 +20,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
-    # run コマンドを実行する作業フォルダを一括でサブフォルダに指定
-    defaults:
-      run:
-        working-directory: ./oyako-communication-shindan
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,17 +31,21 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          # プロジェクトのルートフォルダを指定
+          path: "./oyako-communication-shindan"
 
       - name: Install dependencies
+        working-directory: ./oyako-communication-shindan
         run: npm ci
 
       - name: Build with Next.js
+        working-directory: ./oyako-communication-shindan
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 出力される out フォルダの場所をサブフォルダからのパスで指定
           path: ./oyako-communication-shindan/out
 
       - name: Deploy to GitHub Pages
