@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // 静的HTMLとしてエクスポート
+  output: 'export',
   images: {
-    unoptimized: true, // GitHub Pages等での画像最適化無効化
+    unoptimized: true,
   },
-  // リポジトリ名が「parent-child-diagnosis」の場合、ベースパスを設定（ルートドメインでない場合）
-  // basePath: '/parent-child-diagnosis',
+  // GitHub Pages のリポジトリ名に合わせてパスを設定
+  basePath: process.env.NODE_ENV === 'production' ? '/oyako-communication-shindan' : '',
 };
 
 export default nextConfig;
