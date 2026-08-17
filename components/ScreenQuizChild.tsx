@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AnswerValue } from '@/types';
-import { CHILD_QUESTIONS } from '@/data/questions';
+import { AnswerValue } from '../types';
+import { CHILD_QUESTIONS } from '../data/questions';
 import ProgressBar from './ProgressBar';
 
 export default function ScreenQuizChild({
