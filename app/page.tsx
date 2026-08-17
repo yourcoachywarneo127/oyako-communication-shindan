@@ -13,7 +13,13 @@ export interface DiagnosisResult {
   [key: string]: any;
 }
 
+function calculateIndividualResult(answers: Record<number, any>) {
+  return answers;
+}
 
+function compareParentAndChild(childRes: any, parentRes: any) {
+  return {};
+}
 export default function Home() {
   const [step, setStep] = useState<'intro' | 'child' | 'parent' | 'result'>('intro');
   const [childAnswers, setChildAnswers] = useState<Record<number, AnswerValue>>({});
