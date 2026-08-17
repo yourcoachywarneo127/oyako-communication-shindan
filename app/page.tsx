@@ -10,26 +10,64 @@ import ScreenResult from '../components/ScreenResult';
 export type AnswerValue = any;
 
 export interface DiagnosisResult {
-  child: any;
-  parent: any;
-  differences: any;
+  child: {
+    mainType: string;
+    rawAnswers: Record<number, any>;
+  };
+  parent: {
+    mainType: string;
+    rawAnswers: Record<number, any>;
+  };
+  differences: string[];
   [key: string]: any;
 }
 
-// 簡易計算処理（null safeなオブジェクトを返す）
+// 回答データの合計値からタイプキーを決定する処理
 function calculateIndividualResult(answers: Record<number, any>) {
-  if (!answers) return {};
+  if (!answers || Object.keys(answers).length === 0) {
+    return { mainType: 'typeA', rawAnswers: answers };
+  }
+
+  // 回答スコアの合計を算出
+  const totalScore = Object.values(answers).reduce((sum, val) => {
+    return sum + (typeof val === 'number' ? val : 0);
+  }, 0);
+
+  // 平均点数を算出 (1〜4の範囲)
+  const avgScore = totalScore / Object.keys(answers).length;
+
+  // スコアに応じたタイプ判定（TYPES_DATAのキー名に合わせて必要に応じて調整してください）
+  let mainType = 'typeA';
+  if (avgScore >= 3.25) {
+    mainType = 'typeA';
+  } else if (avgScore >= 2.5) {
+    mainType = 'typeB';
+  } else if (avgScore >= 1.75) {
+    mainType = 'typeC';
+  } else {
+    mainType = 'typeD';
+  }
+
   return {
+    mainType,
     rawAnswers: answers,
-    totalCount: Object.keys(answers).length,
   };
 }
 
-function compareParentAndChild(childRes: any, parentRes: any) {
-  return {
-    matchRate: 100,
-    details: [],
-  };
+// 親子のタイプ比較・すれ違いポイントの生成処理
+function compareParentAndChild(childType: string, parentType: string): string[] {
+  if (childType === parentType) {
+    return [
+      '親子で感覚や考え方のベースが非常に似ています。',
+      'お互いの気持ちを理解しやすい反面、意見がぶつかった際には長引きやすい傾向があります。'
+    ];
+  }
+
+  return [
+    'お子さんの捉え方と保護者の捉え方に少しアプローチの違いが見られます。',
+    '保護者側が「良かれと思って」伝えた言葉が、お子さんには意図と異なるニュアンスで伝わっている可能性があります。',
+    'まずは感情の違いを否定せず、「相手からはどう見えているか」を一歩引いて観察してみることがスムーズな対話の第一歩になります。'
+  ];
 }
 
 export default function Home() {
@@ -80,7 +118,7 @@ export default function Home() {
       console.error('sessionStorage error:', e);
     }
 
-    // sessionStorageから直接最新の子ども回答を取得（State空対策）
+    // sessionStorageから直接最新の子ども回答を取得（State遅延対策）
     let latestChildAnswers = childAnswers;
     try {
       const savedChild = sessionStorage.getItem('childAnswers');
@@ -94,7 +132,7 @@ export default function Home() {
     // 診断計算の実行
     const childRes = calculateIndividualResult(latestChildAnswers);
     const parentRes = calculateIndividualResult(answers);
-    const diffs = compareParentAndChild(childRes, parentRes);
+    const diffs = compareParentAndChild(childRes.mainType, parentRes.mainType);
 
     setResult({
       child: childRes,
