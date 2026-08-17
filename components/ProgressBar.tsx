@@ -3,6 +3,7 @@
 interface Props {
   current: number;
   total: number;
+  label?: string;
 }
 
 export default function ProgressBar({ current, total }: Props) {
