@@ -2,24 +2,16 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # ブランチ名が master の場合は master に変更してください
+    branches: ["main"] # ブランチ名が master の場合は "master" に書き換えてください
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,14 +20,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build with Next.js
+      # ★ 静的サイト（out フォルダ）を生成する必須コマンド
+      - name: Build site
         run: npm run build
 
       - name: Upload artifact
