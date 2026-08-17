@@ -15,8 +15,8 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
       mainType: 'typeA' as TypeCategory,
       subType: 'typeB' as TypeCategory,
       isClose: false,
-      axisScores: { axis1: 0, axis2: 0 },
-      typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
+      axisScores: { axis1: 0, axis2: 0 } as any,
+      typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 } as any,
       rawAnswers: answers,
     };
   }
@@ -44,8 +44,8 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
     mainType,
     subType: 'typeB' as TypeCategory,
     isClose: false,
-    axisScores: { axis1: totalScore, axis2: 0 },
-    typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
+    axisScores: { axis1: totalScore, axis2: 0 } as any,
+    typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 } as any,
     rawAnswers: answers,
   };
 }
