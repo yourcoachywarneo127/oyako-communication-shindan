@@ -107,9 +107,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-amber-50/30 text-gray-800 font-sans antialiased pb-12">
+    <div className="min-h-screen bg-[#FAF7F2] text-gray-800 font-sans antialiased pb-12 flex flex-col justify-between">
       <Header />
-      <main className="max-w-md mx-auto px-4 pt-4">
+      <main className="w-full max-w-md mx-auto px-4 pt-2 pb-8 flex-1 flex flex-col justify-center">
         {step === 'intro' && <ScreenIntro onStart={handleStart} />}
         {step === 'child' && (
           <ScreenQuizChild
