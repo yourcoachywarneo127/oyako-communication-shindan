@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
-import ScreenIntro from '@/components/ScreenIntro';
-import ScreenQuizChild from '@/components/ScreenQuizChild';
-import ScreenQuizParent from '@/components/ScreenQuizParent';
-import ScreenResult from '@/components/ScreenResult';
-import { AnswerValue, DiagnosisResult } from '@/types';
-import { calculateIndividualResult, compareParentAndChild } from '@/lib/diagnosisLogic';
+// 修正前:
+// import Header from '@/components/Header';
+// import ScreenIntro from '@/components/ScreenIntro';
+
+// 修正後（@/app/components/... に変更）:
+import Header from '@/app/components/Header';
+import ScreenIntro from '@/app/components/ScreenIntro';
+import ScreenQuizChild from '@/app/components/ScreenQuizChild';
+import ScreenQuizParent from '@/app/components/ScreenQuizParent';
+import ScreenResult from '@/app/components/ScreenResult';
 
 export default function Home() {
   const [step, setStep] = useState<'intro' | 'child' | 'parent' | 'result'>('intro');
