@@ -21,30 +21,20 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build site
-        run: npm run build
-
-      # out フォルダの場所を検出して `./out` に配置するステップ
-      - name: Locate build output
+      # フォルダ構造を確認して適切な場所で npm install と build を実行する
+      - name: Install and Build
         run: |
-          if [ -d "./out" ]; then
-            echo "Found ./out"
-          elif [ -d "./oyako-communication-shindan/out" ]; then
-            echo "Found ./oyako-communication-shindan/out, moving..."
-            mv ./oyako-communication-shindan/out ./out
+          if [ -f "./package.json" ]; then
+            echo "Building from root directory..."
+            npm install
+            npm run build
           else
-            echo "Searching for out directory..."
-            OUT_DIR=$(find . -maxdepth 3 -type d -name "out" | head -n 1)
-            if [ -n "$OUT_DIR" ]; then
-              echo "Found out at $OUT_DIR, moving to ./out"
-              mv "$OUT_DIR" ./out
-            else
-              echo "out directory not found!"
-              exit 1
-            fi
+            SUBDIR=$(dirname $(find . -maxdepth 2 -name "package.json" | head -n 1))
+            echo "Found package.json in $SUBDIR. Building inside subfolder..."
+            cd "$SUBDIR"
+            npm install
+            npm run build
+            mv out ../out
           fi
 
       - name: Upload artifact
@@ -55,3 +45,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
