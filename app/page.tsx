@@ -10,31 +10,36 @@ import { DiagnosisResult, AnswerValue, TypeCategory, IndividualResult } from '..
 
 // 回答データからタイプおよび各スコア情報を算出する処理
 function calculateIndividualResult(answers: Record<number, AnswerValue>): IndividualResult {
+  const answerEntries = answers ? Object.entries(answers) : [];
+  
   // 回答スコアの合計を算出
-  const totalScore = answers && Object.keys(answers).length > 0
-    ? Object.values(answers).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0)
-    : 0;
+  const totalScore = answerEntries.reduce((sum, [_, val]) => {
+    return sum + (typeof val === 'number' ? val : 0);
+  }, 0);
 
   // 平均点数を算出 (1〜4の範囲)
-  const count = (answers && Object.keys(answers).length) || 1;
+  const count = answerEntries.length || 1;
   const avgScore = totalScore / count;
 
-  // タイプカテゴリの安全な定義
-  // ※実際のプロジェクトのマスタ定義に合わせて柔軟に適合するプロパティ名にセット
-  let mainType: TypeCategory = 'typeA' as TypeCategory;
-  if (avgScore >= 3.25) {
-    mainType = 'typeA' as TypeCategory;
+  // typesData.ts に存在する正確なタイプキーを判定
+  let mainType: TypeCategory = 'sun';
+  if (avgScore >= 3.5) {
+    mainType = 'sun';
+  } else if (avgScore >= 3.0) {
+    mainType = 'fire';
   } else if (avgScore >= 2.5) {
-    mainType = 'typeB' as TypeCategory;
-  } else if (avgScore >= 1.75) {
-    mainType = 'typeC' as TypeCategory;
+    mainType = 'wind';
+  } else if (avgScore >= 2.0) {
+    mainType = 'tree';
+  } else if (avgScore >= 1.5) {
+    mainType = 'moon';
   } else {
-    mainType = 'typeD' as TypeCategory;
+    mainType = 'earth';
   }
 
   return {
     mainType,
-    subType: 'typeB' as TypeCategory,
+    subType: 'moon' as TypeCategory,
     isClose: false,
     axisScores: {
       reaction: totalScore,
@@ -44,7 +49,14 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
       axis1: totalScore,
       axis2: 0,
     },
-    typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
+    typeScores: {
+      sun: 0,
+      moon: 0,
+      wind: 0,
+      tree: 0,
+      fire: 0,
+      earth: 0,
+    },
     rawAnswers: answers || {},
   } as unknown as IndividualResult;
 }
