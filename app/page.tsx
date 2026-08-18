@@ -10,30 +10,17 @@ import { DiagnosisResult, AnswerValue, TypeCategory, IndividualResult } from '..
 
 // 回答データからタイプおよび各スコア情報を算出する処理
 function calculateIndividualResult(answers: Record<number, AnswerValue>): IndividualResult {
-  if (!answers || Object.keys(answers).length === 0) {
-    return {
-      mainType: 'typeA' as TypeCategory,
-      subType: 'typeB' as TypeCategory,
-      isClose: false,
-      axisScores: {
-        reaction: 0,
-        words: 0,
-        safety: 0,
-        thought: 0,
-      },
-      typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
-      rawAnswers: answers,
-    } as unknown as IndividualResult;
-  }
-
   // 回答スコアの合計を算出
-  const totalScore = Object.values(answers).reduce((sum, val) => {
-    return sum + (typeof val === 'number' ? val : 0);
-  }, 0);
+  const totalScore = answers && Object.keys(answers).length > 0
+    ? Object.values(answers).reduce((sum, val) => sum + (typeof val === 'number' ? val : 0), 0)
+    : 0;
 
   // 平均点数を算出 (1〜4の範囲)
-  const avgScore = totalScore / Object.keys(answers).length;
+  const count = (answers && Object.keys(answers).length) || 1;
+  const avgScore = totalScore / count;
 
+  // タイプカテゴリの安全な定義
+  // ※実際のプロジェクトのマスタ定義に合わせて柔軟に適合するプロパティ名にセット
   let mainType: TypeCategory = 'typeA' as TypeCategory;
   if (avgScore >= 3.25) {
     mainType = 'typeA' as TypeCategory;
@@ -54,9 +41,11 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
       words: 0,
       safety: 0,
       thought: 0,
+      axis1: totalScore,
+      axis2: 0,
     },
     typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
-    rawAnswers: answers,
+    rawAnswers: answers || {},
   } as unknown as IndividualResult;
 }
 
