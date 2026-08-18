@@ -12,7 +12,7 @@ export default function ScreenResult({ result }: { result: DiagnosisResult }) {
       {/* 診断完了表示 */}
       <div className="bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-2xl p-4 text-center space-y-1">
         <div className="text-xs font-bold text-emerald-700">CHECK COMPLETE</div>
-        <div className="text-base font-bold">親子のコミュニケーションタイプが見つかりました</div>
+        <div className="text-base font-bold">親子のコミュニケーションタイプが判明しました!</div>
       </div>
 
       {/* お子さんのタイプ */}
