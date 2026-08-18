@@ -15,10 +15,15 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
       mainType: 'typeA' as TypeCategory,
       subType: 'typeB' as TypeCategory,
       isClose: false,
-      axisScores: { axis1: 0, axis2: 0 },
+      axisScores: {
+        reaction: 0,
+        words: 0,
+        safety: 0,
+        thought: 0,
+      },
       typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
       rawAnswers: answers,
-    } as IndividualResult;
+    } as unknown as IndividualResult;
   }
 
   // 回答スコアの合計を算出
@@ -44,10 +49,15 @@ function calculateIndividualResult(answers: Record<number, AnswerValue>): Indivi
     mainType,
     subType: 'typeB' as TypeCategory,
     isClose: false,
-    axisScores: { axis1: totalScore, axis2: 0 },
+    axisScores: {
+      reaction: totalScore,
+      words: 0,
+      safety: 0,
+      thought: 0,
+    },
     typeScores: { typeA: 0, typeB: 0, typeC: 0, typeD: 0 },
     rawAnswers: answers,
-  } as IndividualResult;
+  } as unknown as IndividualResult;
 }
 
 // 親子のタイプ比較・すれ違いポイントの生成処理
