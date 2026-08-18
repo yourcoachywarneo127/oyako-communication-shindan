@@ -1,11 +1,26 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { DiagnosisResult } from '../types';
 import { TYPES_DATA } from '../data/typesData';
 import { CTA_URL } from '../data/config';
 
+// LINE連携用の設定（CTA_URLが使えない場合のフォールバック用URLスキーム）
+const LINE_ID = '506hokix'; // ※ご自身の公式LINEのID（@なし）に変更してください
+const DEFAULT_MESSAGE = '勉強会希望';
+const LINE_URL = `https://line.me/R/oaMessage/${LINE_ID}/?${encodeURIComponent(DEFAULT_MESSAGE)}`;
+
 export default function ScreenResult({ result }: { result: DiagnosisResult }) {
   const childInfo = TYPES_DATA[result.child.mainType];
   const parentInfo = TYPES_DATA[result.parent.mainType];
+
+  // 画像表示用の状態管理
+  const [showImage, setShowImage] = useState(false);
+
+  // CTA_URLにクエリパラメータを付与、なければLINE_URLを使用
+  const targetLineUrl = CTA_URL
+    ? `${CTA_URL}${CTA_URL.includes('?') ? '&' : '?'}text=${encodeURIComponent(DEFAULT_MESSAGE)}`
+    : LINE_URL;
 
   return (
     <div className="space-y-6">
@@ -89,14 +104,36 @@ export default function ScreenResult({ result }: { result: DiagnosisResult }) {
         <p className="text-xs text-gray-600 leading-relaxed text-left">
           この診断で分かるのは、親子それぞれのコミュニケーション傾向です。実際の親子のすれ違いには、言葉だけでは分からない小さなサインが隠れていることがあります。そのサインをどう見つけ、どう受け止め、どう“伴走”につなげるのか。無料勉強会で一緒に学んでみませんか？
         </p>
-        <a
-          href={CTA_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full py-4 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold rounded-2xl shadow-lg shadow-amber-200 transition-all text-base"
+
+        {/* ボタンを押すと画像をトグル表示 */}
+        <button
+          type="button"
+          onClick={() => setShowImage(!showImage)}
+          className="block w-full py-4 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold rounded-2xl shadow-lg shadow-amber-200 transition-all text-base cursor-pointer"
         >
-          無料勉強会について見る
-        </a>
+          {showImage ? '案内を閉じる' : '無料勉強会について見る'}
+        </button>
+
+        {/* ボタンタップ後に表示される画像エリア */}
+        {showImage && (
+          <div className="pt-4 space-y-2 animate-fadeIn">
+            <p className="text-xs font-bold text-amber-700">
+              👇 画像をタップしてLINEで「勉強会希望」と送信
+            </p>
+            <a
+              href={targetLineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <img
+                src="/images/seminar-banner.png" // ※public/images/内に置いたバナー画像名に合わせて変更してください
+                alt="無料勉強会のご案内（タップでLINEが開きます）"
+                className="w-full rounded-2xl shadow-md border border-amber-200"
+              />
+            </a>
+          </div>
+        )}
       </div>
 
       {/* 注意書き */}
