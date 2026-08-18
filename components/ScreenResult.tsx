@@ -127,7 +127,7 @@ export default function ScreenResult({ result }: { result: DiagnosisResult }) {
               className="block transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
               <img
-                src="/images/seminar-banner.png" // ※public/images/内に置いたバナー画像名に合わせて変更してください
+                src="oyako-communication-shindan/images/seminar-banner.png" // ※public/images/内に置いたバナー画像名に合わせて変更してください
                 alt="無料勉強会のご案内（タップでLINEが開きます）"
                 className="w-full rounded-2xl shadow-md border border-amber-200"
               />
